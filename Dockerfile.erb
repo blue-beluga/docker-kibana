@@ -1,0 +1,29 @@
+# encoding: UTF-8
+
+FROM <%= ENV.fetch('FROM') %>
+MAINTAINER The Blue Beluga <admin@bluebeluga.io>
+
+LABEL name="kibana"
+LABEL description="Alpine Linux Base with Kibana"
+LABEL version="<%= ENV.fetch('KIBANA_VERSION') %>"
+
+ENV KIBANA_VERSION <%= ENV.fetch('KIBANA_VERSION') %>
+ENV KIBANA_SHA256 <%= ENV.fetch('KIBANA_SHA256') %>
+
+RUN apk-install curl ca-certificates su-exec && \
+    apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini && \
+    curl -sSLO "https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz" && \
+    echo "${KIBANA_SHA256}  kibana-${KIBANA_VERSION}-linux-x64.tar.gz" | sha256sum -c - && \
+    tar -xzf "kibana-${KIBANA_VERSION}-linux-x64.tar.gz" && \
+    rm "kibana-${KIBANA_VERSION}-linux-x64/config/kibana.yml" \
+       "kibana-${KIBANA_VERSION}-linux-x64.tar.gz" && \
+    apk del curl && \
+    rm -rf /var/cache/apk/*
+
+COPY files/kibana.yml "/kibana-${KIBANA_VERSION}-linux-x64/config"
+COPY files/entrypoint.sh /
+ENV PATH /kibana/bin:$PATH
+
+EXPOSE 5601
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["kibana"]
