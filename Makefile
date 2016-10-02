@@ -100,7 +100,7 @@ task::
 
 help::
 	@printf $(HELP_FMT) 'push' 'Push image or a repository to the registry'
-push:: task build
+push:: task build test
 	for registry in $(PUSH_REGISTRIES); do \
 		for tag in $(PUSH_TAGS); do \
 			docker tag "$(REG)/$(REPO):$(TAG)" "$${registry}/$(REPO):$${tag}"; \

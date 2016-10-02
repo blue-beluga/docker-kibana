@@ -3,9 +3,11 @@
 FROM <%= ENV.fetch('FROM') %>
 MAINTAINER The Blue Beluga <admin@bluebeluga.io>
 
-LABEL name="kibana"
-LABEL description="Alpine Linux Base with Kibana"
-LABEL version="<%= ENV.fetch('KIBANA_VERSION') %>"
+LABEL vendor="The Blue Beluga Company"
+LABEL io.bluebeluga.kibana.description="Kibana"
+LABEL io.bluebeluga.kibana.version="<%= ENV.fetch('TAG') %>"
+LABEL io.bluebeluga.kibana.git-revision="<%= ENV.fetch('GIT_REVISION') %>"
+LABEL io.bluebeluga.kibana.release-date="<%= Time.now.strftime('%B %d, %Y %H:%M') %>"
 
 ENV KIBANA_VERSION <%= ENV.fetch('KIBANA_VERSION') %>
 ENV KIBANA_SHA256 <%= ENV.fetch('KIBANA_SHA256') %>

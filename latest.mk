@@ -1,1 +1,3 @@
-LATEST_TAG = 4.5.1
+# encoding: UTF-8
+
+LATEST_TAG = 4.6.1

@@ -1,0 +1,4 @@
+# encoding: UTF-8
+
+export KIBANA_VERSION=4.6.1
+export KIBANA_SHA256=2cc005b7bfbe2436f4cf93fcdb957ab5683e7d7843537dfd2bd51644c835dcaf
